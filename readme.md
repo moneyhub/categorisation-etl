@@ -1,4 +1,4 @@
-# Project Name
+# Transaction categorisation ETL
 
 ## Description
 
@@ -8,9 +8,9 @@ This project is designed to perform data categorization using an ETL (Extract, T
 
 Before running the project, make sure you have:
 
-- Created a new API user
-- Created an account
 - Run `npm ci` to install dependencies
+- Add client config to `/config/client.js`
+- Run `npm run create-account` if required
 
 ## Running
 
