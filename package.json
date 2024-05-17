@@ -1,0 +1,20 @@
+{
+  "name": "categorisation-etl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "import": "node import.js",
+    "export": "node export.js",
+    "create-account": "node create-account.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mft/moneyhub-api-client": "^6.1.0",
+    "csv-parse": "^5.5.6",
+    "csv-stringify": "^6.5.0",
+    "stream-transform": "^3.3.2"
+  }
+}
