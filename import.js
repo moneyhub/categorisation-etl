@@ -9,28 +9,33 @@ const moneyhub = await Moneyhub(config)
 
 //! The account to import to
 const {userId, accountId} = userConfig
+
 //! The default category to assign
-const categories = {
-  uncategorised: "std:39577c49-350f-45a4-8ec3-48ce205585fb"
-}
+const UNCATEGORISED_CATEGORY_ID  = "std:39577c49-350f-45a4-8ec3-48ce205585fb"
 
 //! The file to import form
-const fileName = "./data/transactions.csv"
+const FILE_NAME = "./data/transactions.csv"
+
+const FILE_COLUMNS = {
+  DATE: "Date",
+  DESCRIPTION: "Description",
+  AMOUNT: "Amount",
+}
 
 //! The format of the file
 const formatter = transform(async (record) => ({
   accountId,
   amount: {
-    value: parseAmount(record.Amount),
+    value: parseAmount(record[FILE_COLUMNS.AMOUNT]),
   },
-  date: new Date(record.Date).toISOString(),
-  longDescription: record.Description,
-  categoryId: categories.uncategorised,
+  date: new Date(record[FILE_COLUMNS.DATE]).toISOString(),
+  longDescription: record[FILE_COLUMNS.DESCRIPTION],
+  categoryId: UNCATEGORISED_CATEGORY_ID,
 }))
 
 const parseAmount = (amount) => Math.round(parseFloat(amount) * 100)
 
-const fileReader = fs.createReadStream(fileName, "utf8")
+const fileReader = fs.createReadStream(FILE_NAME, "utf8")
 
 fileReader.on("end", () => console.log("File read complete"))
 
@@ -57,6 +62,7 @@ formatter.on("error", (err) => console.error("Formatting error", err.message))
 
 // Upload the transactions when the file read is complete. This could have been done in batches as went along
 formatter.on("end", async () => {
+  console.log(`Importing ${records.length} transactions`)
   while (records.length > 0) {
     const batch = records.splice(0, records.length > batchSize ? batchSize: records.length)
 

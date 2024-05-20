@@ -10,7 +10,7 @@ Before running the project, make sure you have:
 
 - Run `npm ci` to install dependencies
 - Add client config to `/config/client.js`
-- (Optional) Run `npm run create-account` to create a user and an account in our API
+- (Optional) Run `npm run create-user` to create a user and an account in our API
 - Add user and account details to `/config/user.js`
 - Add csv file under the `data` folder as `transactions.csv`
 - The script expects for the following columns to exist in the csv:

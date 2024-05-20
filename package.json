@@ -7,7 +7,7 @@
   "scripts": {
     "import": "node import.js",
     "export": "node export.js",
-    "create-account": "node create-account.js"
+    "create-user": "node create-user.js"
   },
   "author": "",
   "license": "ISC",

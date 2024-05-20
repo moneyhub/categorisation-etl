@@ -11,7 +11,7 @@ const moneyhub = await Moneyhub(config)
 const {userId, accountId} = userConfig
 
 //! The file to write to
-const fileName = "./transaction rows May 2024.csv"
+const FILE_NAME = "./data/transactions.csv"
 
 //! The format of the file
 const formatter = transform(async (record) => ({
@@ -28,7 +28,7 @@ const stringifier = stringify({
   header: true,
 })
 
-const fileWriter = fs.createWriteStream(fileName.replace(".csv", "-categorised.csv"))
+const fileWriter = fs.createWriteStream(FILE_NAME.replace(".csv", "-categorised.csv"))
 
 fileWriter.on("finish", () => console.log("Export finished"))
 
