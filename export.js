@@ -3,12 +3,12 @@ import {stringify}from "csv-stringify"
 import {transform} from "stream-transform"
 import {Moneyhub} from "@mft/moneyhub-api-client"
 import config from "./config/client.js"
+import userConfig from "./config/user.js"
 
 const moneyhub = await Moneyhub(config)
 
 //! The account to export from
-const userId = "66462c065fa89f4e954cdcce"
-const accountId = "1ef08ccf-d219-411f-85e5-b35ad3fd24df"
+const {userId, accountId} = userConfig
 
 //! The file to write to
 const fileName = "./transaction rows May 2024.csv"

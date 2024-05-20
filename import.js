@@ -3,20 +3,19 @@ import {parse}from "csv-parse"
 import {transform} from "stream-transform"
 import {Moneyhub} from "@mft/moneyhub-api-client"
 import config from "./config/client.js"
+import userConfig from "./config/user.js"
 
 const moneyhub = await Moneyhub(config)
 
 //! The account to import to
-const userId = "66462c065fa89f4e954cdcce"
-const accountId = "1ef08ccf-d219-411f-85e5-b35ad3fd24df"
-
+const {userId, accountId} = userConfig
 //! The default category to assign
 const categories = {
   uncategorised: "std:39577c49-350f-45a4-8ec3-48ce205585fb"
 }
 
 //! The file to import form
-const fileName = "./data/transaction rows May 2024.csv"
+const fileName = "./data/transactions.csv"
 
 //! The format of the file
 const formatter = transform(async (record) => ({

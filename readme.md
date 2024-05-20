@@ -10,14 +10,14 @@ Before running the project, make sure you have:
 
 - Run `npm ci` to install dependencies
 - Add client config to `/config/client.js`
+- Add user and account details to `/config/user.js`
 - Run `npm run create-account` if required
 
 ## Running
 
 Each file contains some configuration which needs to be set
 
-- `userId` and `accountId`
-- The file path
+- The file 
 - Update the formatter for the required file format
 - Run `npm run import` to import data
 - When enrichment is complete run `npm run export`
