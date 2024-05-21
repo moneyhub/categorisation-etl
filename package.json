@@ -9,7 +9,11 @@
     "export": "node export.js",
     "create-user": "node create-user.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:moneyhub/categorisation-etl.git"
+  },
+  "author": "MOneyhub Financial Technology Ltd",
   "license": "ISC",
   "dependencies": {
     "@mft/moneyhub-api-client": "^6.1.0",
