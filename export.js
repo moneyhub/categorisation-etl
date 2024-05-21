@@ -6,6 +6,8 @@ import config from "./config/client.js"
 import userConfig from "./config/user.js"
 
 const moneyhub = await Moneyhub(config)
+const {data: standardCategories} = await moneyhub.getStandardCategories({})
+const {data: standardCategoryGroups} = await moneyhub.getStandardCategoryGroups({})
 
 //! The account to export from
 const {userId, accountId} = userConfig
@@ -14,13 +16,21 @@ const {userId, accountId} = userConfig
 const FILE_NAME = "./data/transactions.csv"
 
 //! The format of the file
-const formatter = transform(async (record) => ({
-  Date: record.date,
-  Description: record.longDescription,
-  Amount: (record.amount.value / 100).toFixed(2),
-  CategoryId: record.categoryId,
-  CounterpartyId: record.counterpartyId,
-}))
+const formatter = transform(async (record) => {
+  const category = standardCategories.find((category) => category.categoryId === record.categoryId)
+  const group = standardCategoryGroups.find((group) => group.id === category?.group)
+
+  return {
+    Date: record.date,
+    Description: record.longDescription,
+    Amount: (record.amount.value / 100).toFixed(2),
+    CategoryId: record.categoryId,
+    CategoryName: category?.key,
+    CategoryGroupId: category?.group,
+    CategoryGroupName: group?.key,
+    CounterpartyId: record.counterpartyId,
+  }
+})
 
 formatter.on("error", (err) => console.error("Formatting error", err.message))
 
