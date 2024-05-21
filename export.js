@@ -6,8 +6,20 @@ import config from "./config/client.js"
 import userConfig from "./config/user.js"
 
 const moneyhub = await Moneyhub(config)
+
+const getGlobalCounterparties = async (counterparties = [], offset = 0) => {
+  const {data, links} = await moneyhub.getGlobalCounterparties({limit: 1000, offset})
+  if (links.next) {
+      const nextOffset = new URL(links.next).searchParams.get("offset")
+      return getGlobalCounterparties([...data, ...counterparties], nextOffset)
+  }
+  return [...data, ...counterparties]
+}
+
+
 const {data: standardCategories} = await moneyhub.getStandardCategories({})
 const {data: standardCategoryGroups} = await moneyhub.getStandardCategoryGroups({})
+const counterparties = await getGlobalCounterparties()
 
 //! The account to export from
 const {userId, accountId} = userConfig
@@ -19,7 +31,8 @@ const FILE_NAME = "./data/transactions.csv"
 const formatter = transform(async (record) => {
   const category = standardCategories.find((category) => category.categoryId === record.categoryId)
   const group = standardCategoryGroups.find((group) => group.id === category?.group)
-
+  const counterparty = record.counterpartyId ? counterparties.find((counterpaty) => counterpaty.id === record.counterpartyId) : {}
+  
   return {
     Date: record.date,
     Description: record.longDescription,
@@ -28,7 +41,8 @@ const formatter = transform(async (record) => {
     CategoryName: category?.key,
     CategoryGroupId: category?.group,
     CategoryGroupName: group?.key,
-    CounterpartyId: record.counterpartyId,
+    CounterpartyId: counterparty?.id,
+    CounterpartyName: counterparty?.name,
   }
 })
 
