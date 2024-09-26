@@ -16,7 +16,7 @@
   "author": "MOneyhub Financial Technology Ltd",
   "license": "ISC",
   "dependencies": {
-    "@mft/moneyhub-api-client": "^6.1.0",
+    "@mft/moneyhub-api-client": "^6.4.0",
     "csv-parse": "^5.5.6",
     "csv-stringify": "^6.5.0",
     "stream-transform": "^3.3.2"
